@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test app. Vira Oliynyk</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    
+    <!--[if lt IE 9]>
+         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="css/normalize.min.css" type="text/css">
+    <link rel="stylesheet" href="css/fotorama.css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+</head>
+<body>
+  <div class="container">
+<!--PLAYER-->
+     <div id="player" class="player">
+        <div class="player__screen fotorama" id="fotorama" data-auto="false" id="player-screen">     
+        <img class="player__img" src="" alt="">     
+        </div>
+        <div class="player__controls">
+           <button class="btn btn--success" id="play">play</button>
+           <button class="btn btn--alert" id="stop">stop</button>
+<!--           <button class="btn " id="fullscreen">fullscreen</button>-->
+        </div>
+     </div>
+<!--PLAYER END-->
+    
+<!--LIBRARY-->
+     <div id="library" class="library">        
+        <div class="library__container">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(1).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(2).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(3).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(4).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(5).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(6).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(7).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(8).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(9).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(10).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(11).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(12).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(13).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(14).jpg" alt="image">
+          <img class="library__thumbnail js-thumbnail" src="images/img_(15).jpg" alt="image">
+        </div>
+        
+        <div class="library__label">Images</div>
+     </div>
+<!--LIBRARY END-->
+</div>
+ 
+<!--TIMELINE-->     
+     <div id="timeline" class="timeline">
+        <div class="timeline__slot js-slot"></div>
+        <div class="timeline__slot js-slot"></div>
+        <div class="timeline__slot js-slot"></div>
+        <div class="timeline__slot js-slot"></div>
+        <div class="timeline__slot js-slot"></div>
+        <div class="timeline__slot js-slot"></div>
+        <div class="timeline__slot js-slot"></div>
+        <div class="timeline__slot js-slot"></div>
+        <div class="timeline__slot js-slot"></div>
+        <div class="timeline__slot js-slot"></div>
+     </div>
+<!--TIMELINE-->     
+
+
+  
+<!--SCRIPTS-->  
+
+<!--JQuery-->
+<script src="scripts/jquery-3.1.1.min.js"></script>
+<!--Fotorama-->
+<script src="scripts/fotorama.js"></script>
+<!--Custom script-->
+<script type="text/javascript" src="scripts/script.js"></script>
+
+</body>
+</html>
