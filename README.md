@@ -2,5 +2,4 @@
 
 Small slider editor for the test.
 
-###### Used: 
-###### fotorama
+###### Used: fotorama, jquery
