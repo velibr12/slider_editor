@@ -16,8 +16,7 @@ $(document).ready(function(){
       nav : false,
       fit : 'cover',
       loop : true,
-      arrows : false,
-//      allowfullscreen: true
+      arrows : false
    });
    
    /*
@@ -25,76 +24,41 @@ $(document).ready(function(){
    **/
    
    loadLibrary();
-
    
    /*
-   *  Slideshow buttons
+   *  Buttons
    **/
+   
+   //slideshow buttons
    var $playBtn = $('#play');
    var $stopBtn = $('#stop');
    
-   var $fullScreenBtn = $('#fullscreen');
+   //timeline button
+   var $newSlotBtn = $('#js-add-slot');
+   
    
    $playBtn.on('click', fotorama.startAutoplay.bind(null, 3000));
    $stopBtn.on('click', fotorama.stopAutoplay);
-//   $fullScreenBtn.on('click', fotorama.requestFullScreen);
+   
+   $newSlotBtn.on('click', addNewSlot);
    
    /*
    *  Drag'n'Drop functionality
    **/
    var $thumbnails = $('.js-thumbnail');
    var $slots = $('.js-slot');   
+   var $timeline = $('#timeline-container');
 
    $thumbnails
-      .on('dragstart', function(e){
-      var $this = $(this);  
-//      $this.css('opacity', '.5');
-      
-      //In order to drop allow copy effect
-      e.originalEvent.dataTransfer.effectAllowed = "copy";
-            
-      // Copy the relative address of a picture to extract on drop      
-      e.originalEvent.dataTransfer.setData("text/plain", $this.attr("src"));      
-      
-      $.each($slots, function(){
-         if(!$(this).hasClass('filled')){
-            $slots.addClass('highlight');
-         }    
-      });      
-      
-      })
+      .on('dragstart', {event}, dragHandler)
       .on('dragend', function(){
          $slots.removeClass('highlight');
    });
-   
-   
-   $slots
-      .on('dragover', function(){      
-         return false;      
-   })
-      .on('drop', function(e){      
-         e.stopImmediatePropagation();
-
-         var target = $(this);
-         var imgAddress = e.originalEvent.dataTransfer.getData("text");
-         e.originalEvent.dataTransfer.clearData();
-         var image = $("<img />");      
-         image.attr("src", imgAddress);
-         image.addClass("slot__image");
-         image.attr("draggable", false);
-
-         if(target.hasClass("filled")){
-            clearSlot(target);         
-         }       
-         target.addClass('filled');
-         
-         target.append(image);
       
-         resetPlayerImages();
-
-         return false;
-   })
-      .on('contextmenu', function(e){
+   $timeline
+      .on('dragover', '.js-slot', function(){ return false; })
+      .on('drop', '.js-slot', {event}, dropHandler)
+      .on('contextmenu', '.js-slot', function(e){
          clearSlot($(this));
          return false;
    });
@@ -102,7 +66,65 @@ $(document).ready(function(){
    /*
    *  FUNCTIONS
    **/
+      
+   //loads images library
+   function loadLibrary(){
+      var library = $('#library__container');
+      var dir = "images";
+      var ext = 'jpg';
+      $.get(dir, function(data){
+         var elements = $(data).find('a:contains('+ext+')');
+         
+         elements.each(function(el, val){
+            var newImage = $('<img />');
+            newImage.addClass('library__thumbnail js-thumbnail');
+            newImage.prop('src', dir +'/' +val.innerText);
+            library.append(newImage);
+         });
+      });
+   }     
    
+   //Drop handler
+   function dropHandler(event){
+      event.stopImmediatePropagation();
+
+      var target = $(this);
+      var imgAddress = event.originalEvent.dataTransfer.getData("text");
+      event.originalEvent.dataTransfer.clearData();
+      var image = $("<img />");      
+      image.attr("src", imgAddress);
+      image.addClass("slot__image");
+      image.attr("draggable", false);
+
+      if(target.hasClass("filled")){
+         clearSlot(target);         
+      }       
+      target.addClass('filled');
+
+      target.append(image);
+
+      resetPlayerImages();
+
+      return false;
+   }
+   
+   //Drap start handler
+   function dragHandler(event){
+      var $this = $(this);  
+
+      //In order to drop allow copy effect
+      event.originalEvent.dataTransfer.effectAllowed = "copy";
+
+      // Copy the relative address of a picture to extract on drop      
+      event.originalEvent.dataTransfer.setData("text/plain", $this.attr("src"));      
+
+      $.each($slots, function(){
+         if(!$(this).hasClass('filled')){
+            $slots.addClass('highlight');
+         }    
+      });      
+      
+   }
          
    //Collects slotted images addresses and return as array
    function collectImagesInfo(){
@@ -128,34 +150,23 @@ $(document).ready(function(){
       fotorama.load(addressArray);      
    }
    
+   //reload updated timeline images into player
    function resetPlayerImages(){
       var addresses = collectImagesInfo();
       setPlayerImages(addresses);
    }
    
+   //clears timeline slot
    function clearSlot($slot){
       $slot.removeClass("filled");
       $slot.empty();
       resetPlayerImages();
    }
-   
-   function loadLibrary(){
-      var library = $('#library__container');
-      var dir = "images";
-      var ext = 'jpg';
-      $.get(dir, function(data){
-         var elements = $(data).find('a:contains('+ext+')');
-         
-         elements.each(function(el, val){
-            var newImage = $('<img />');
-            newImage.addClass('library__thumbnail js-thumbnail');
-            newImage.prop('src', dir +'/' +val.innerText);
-            library.append(newImage);
-         });
-      });
-   }
-      
-   
-   
+ 
+   //adds new slot to the timeline
+   function addNewSlot(){
+      var slot = $('.js-slot:last-child').clone().empty();
+      $timeline.append(slot);
+   }   
    
 });

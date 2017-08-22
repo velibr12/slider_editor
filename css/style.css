@@ -17,10 +17,10 @@ body{
 }
 
 .btn{
-   padding: 7px 15px;
+   padding: 10px;
    border-radius: 3px;
    border: 0;
-   width: 100px;
+   width: 120px;
    cursor: pointer;
 }
 
@@ -137,7 +137,8 @@ body{
 *   TIMELINE
 **/
 
-.timeline{   
+
+.timeline__container{   
    width: 100%;
    overflow-x: scroll;
    display: -webkit-flex;
@@ -145,7 +146,7 @@ body{
    display: -ms-flex;
    display: -o-flex;
    display: flex;
-   padding-bottom: 20px;
+   padding: 0 10px 20px;
    background: #ccc;
 }
 
