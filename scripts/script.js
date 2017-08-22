@@ -19,6 +19,12 @@ $(document).ready(function(){
       arrows : false,
 //      allowfullscreen: true
    });
+   
+   /*
+   *  LOAD LIBRARY
+   **/
+   
+   loadLibrary();
 
    
    /*
@@ -38,42 +44,7 @@ $(document).ready(function(){
    **/
    var $thumbnails = $('.js-thumbnail');
    var $slots = $('.js-slot');   
-      
-   //Collects slotted images addresses and return as array
-   function collectImagesInfo(){
-      var imagesAddresses = [];
-      
-      $slots.each(function(el){
-         $this = $(this);
-         var img = {};
-         if(!$this.hasClass('filled')){
-            img.html = $("<div class=\"player__img--blank\"></div>");   
-         }else{
-            img.img = $this.children().attr("src");
-            img.class = "player__img";
-         }         
-         imagesAddresses.push(img);
-      });
-      return imagesAddresses;
-   }
-   
-   // Needs array with images addresses
-   function setPlayerImages(addressArray){
-      /* Loads images into fotorama*/
-      fotorama.load(addressArray);      
-   }
-   
-   function resetPlayerImages(){
-      var addresses = collectImagesInfo();
-      setPlayerImages(addresses);
-   }
-   
-   function clearSlot($slot){
-      $slot.removeClass("filled");
-      $slot.empty();
-      resetPlayerImages();
-   }
-      
+
    $thumbnails
       .on('dragstart', function(e){
       var $this = $(this);  
@@ -128,7 +99,62 @@ $(document).ready(function(){
          return false;
    });
    
+   /*
+   *  FUNCTIONS
+   **/
    
+         
+   //Collects slotted images addresses and return as array
+   function collectImagesInfo(){
+      var imagesAddresses = [];
+      
+      $slots.each(function(el){
+         $this = $(this);
+         var img = {};
+         if(!$this.hasClass('filled')){
+            img.html = $("<div class=\"player__img--blank\"></div>");   
+         }else{
+            img.img = $this.children().attr("src");
+            img.class = "player__img";
+         }         
+         imagesAddresses.push(img);
+      });
+      return imagesAddresses;
+   }
+   
+   // Needs array with images addresses
+   function setPlayerImages(addressArray){
+      /* Loads images into fotorama*/
+      fotorama.load(addressArray);      
+   }
+   
+   function resetPlayerImages(){
+      var addresses = collectImagesInfo();
+      setPlayerImages(addresses);
+   }
+   
+   function clearSlot($slot){
+      $slot.removeClass("filled");
+      $slot.empty();
+      resetPlayerImages();
+   }
+   
+   function loadLibrary(){
+      var library = $('#library__container');
+      var dir = "images";
+      var ext = 'jpg';
+      $.get(dir, function(data){
+         var elements = $(data).find('a:contains('+ext+')');
+         
+         elements.each(function(el, val){
+            var newImage = $('<img />');
+            newImage.addClass('library__thumbnail js-thumbnail');
+            newImage.prop('src', dir +'/' +val.innerText);
+            library.append(newImage);
+         });
+      });
+   }
+      
    
    
    
