@@ -1,3 +1,6 @@
 # Slider editor
 
-Test work
+Small slider editor for the test.
+
+###### Used: 
+###### fotorama
