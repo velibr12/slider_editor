@@ -1,0 +1,3 @@
+# Slider editor
+
+Test work
